@@ -10,7 +10,7 @@ namespace NQueens
     {
         static void Main(string[] args)
         {
-            String whatever = "Hello world!!!";
+            String whatever = "Hello world!!!!!!!!!!";
         }
     }
 }
