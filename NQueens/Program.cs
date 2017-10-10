@@ -14,8 +14,13 @@ namespace NQueens
     {
         static void Main(string[] args)
         {
-            String whatever = "Hello world!!!!!!!!!!";
-            bool[,] board = new bool[Constants.Queen,Constants.Queen];
+            
+            //String whatever = "Hello world!!!!!!!!!!";
+            int[,] board = new int[Constants.Queen,Constants.Queen];
+        }
+        public static int[,] placeQueen(int[,] nboard,int row, int col)
+        {
+            return nboard;
         }
         
     }
