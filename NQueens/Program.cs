@@ -40,11 +40,11 @@ namespace NQueens
             {
                 copyboard[row, col] = 2;
                 //Marking Up and Down Invalid
-                for (int r = 0; r < Constants.Queen - 1; r++)
+                for (int r = 0; r < Constants.Queen; r++)
                     if (copyboard[r, col] == 0)
                         copyboard[r, col] = 1;
                 //Marking Left and Right Invalid
-                for(int c=0;c<Constants.Queen-1;c++)
+                for(int c=0;c<Constants.Queen;c++)
                     if (copyboard[row, c] == 0)
                         copyboard[row, c] = 1;
                 #region//Marking Diagonal Invalid (Jarrod Ariola)
