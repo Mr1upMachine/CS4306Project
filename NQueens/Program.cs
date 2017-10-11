@@ -24,7 +24,6 @@ namespace NQueens
             int[,] board = new int[Constants.Queen,Constants.Queen];
             board[2, 2] = 99;
             int[,] complete = placeQueen(board,1,1);
-            board[4, 4] = 66;
             //Stop the watch, and output the amount of Milliseconds taken. Should be after everything is done.
             //System.Threading.Thread.Sleep(5000);            //Forces the App to wait for now to make sure stopwatch is working, will be removed.
             watch.Stop();
@@ -32,10 +31,6 @@ namespace NQueens
             Console.WriteLine(time);
         }
 
-        public static int[,] start(int[,] board)
-        {
-            return board;
-        }
 
         public static int[,] placeQueen(int[,] nboard, int row, int col)
         {
