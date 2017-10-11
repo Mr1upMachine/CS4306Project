@@ -47,7 +47,24 @@ namespace NQueens
                 for(int c=0;c<Constants.Queen-1;c++)
                     if (copyboard[row, c] == 0)
                         copyboard[row, c] = 1;
-                //Marking Diagonal Invalid
+                #region//Marking Diagonal Invalid (Jarrod Ariola)
+                //Marking Upper-left Diagonals
+                for (int r = row, c = col; r >= 0 && c >= 0; r--, c--)
+                    if (copyboard[r, c] == 0)
+                        copyboard[r, c] = 1;
+                //Marking Upper-right Diagonals
+                for (int r = row, c = col; r >= 0 && c < nboard.Length; r--, c++)
+                    if (copyboard[r, c] == 0)
+                        copyboard[r, c] = 1;
+                //Marking Lower-left Diagonals
+                for (int r = row, c = col; r < nboard.Length && c >= 0; r++, c--)
+                    if (copyboard[r, c] == 0)
+                        copyboard[r, c] = 1;
+                //Marking Lower-right Diagonals
+                for (int r = row, c = col; r < nboard.Length && c < nboard.Length; r++, c++)
+                    if (copyboard[r, c] == 0)
+                        copyboard[r, c] = 1;
+                #endregion
             }
 
             return copyboard;
