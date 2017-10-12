@@ -7,14 +7,8 @@ using System.Threading.Tasks;
 
 namespace NQueens
 {
-    public static class Constants
-    {
-        //removed in favor of variable size
-        //public const int Queen = 9;
-    }
     class Program
     {
-        public static bool found = false;
         public static int boardSize = 0;
         public static int[,] finalBoard = { { -1 } };
         //  FOR THE BOARD:
@@ -38,6 +32,7 @@ namespace NQueens
             watch.Start();
 
 
+            //core algorithm begins
             solveQueen(new int[boardSize, boardSize], 0);
 
 
@@ -104,11 +99,11 @@ namespace NQueens
         //core algorithm that solves the n queen's problem
         public static bool solveQueen(int[,] nboard, int col)
         {
-            //correct final escape characteristic
+            //recursive escape characteristic, can only reach if finished
             if (col == boardSize)
             {
-                setFinalBoard(nboard); //only sets the final board
-                return true;
+                setFinalBoard(nboard); //extracts the final board
+                return true; //returns true so it can jump out of the recursive loop immeaditely when done
             }
 
             //checks each row for free space
@@ -123,7 +118,7 @@ namespace NQueens
                     printBoard(tempboard);
                     Console.WriteLine();
 
-                    //if it successfully can place the queen, moves into its next recursive state
+                    //if it successfully can place the queen, moves into its next recursive level
                     //returns true so it can jump out of the recursive loop immeaditely when done
                     if (solveQueen(tempboard, col+1))
                     {
@@ -131,7 +126,7 @@ namespace NQueens
                     }
                 }
             }
-            return false;
+            return false; //fails to find a valid space
         }
 
         //verifys if a queen can be placed in a location
