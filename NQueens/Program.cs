@@ -43,7 +43,7 @@ namespace NQueens
             //System.Threading.Thread.Sleep(5000);            //Forces the App to wait for now to make sure stopwatch is working, will be removed.
             watch.Stop();
             long time = watch.ElapsedMilliseconds;
-            Console.WriteLine("time: "+time);
+            Console.WriteLine("time: " + (time / 1000) + ":" + (time % 1000));
             printPrettyBoard(finalBoard);
         }
 
@@ -115,8 +115,8 @@ namespace NQueens
                     int[,] tempboard = placeQueen(nboard, row, col);
 
                     //shows each step TODO remove
-                    printBoard(tempboard);
-                    Console.WriteLine();
+                    //printBoard(tempboard);
+                    //Console.WriteLine();
 
                     //if it successfully can place the queen, moves into its next recursive level
                     //returns true so it can jump out of the recursive loop immeaditely when done
