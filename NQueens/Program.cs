@@ -16,6 +16,7 @@ namespace NQueens
     {
         public static bool found = false;
         public static int boardSize = 0;
+        public static int[,] finalBoard = { { -1 } };
         //  FOR THE BOARD:
         //  2 MEANS QUEEN
         //  1 MEANS INVALID
@@ -36,16 +37,19 @@ namespace NQueens
             Stopwatch watch = new Stopwatch();
             watch.Start();
 
+
+            solveQueen(new int[boardSize, boardSize], 0);
+
+
             
-            
-            int[,] board = new int[boardSize,boardSize];
-            int[,] complete = placeQueen(board,1,1);
+            //int[,] board = new int[boardSize,boardSize];
+            //finalBoard = placeQueen(board,1,1);
             //Stop the watch, and output the amount of Milliseconds taken. Should be after everything is done.
             //System.Threading.Thread.Sleep(5000);            //Forces the App to wait for now to make sure stopwatch is working, will be removed.
             watch.Stop();
             long time = watch.ElapsedMilliseconds;
-            Console.WriteLine(time);
-            printBoard(complete);
+            Console.WriteLine("time: "+time);
+            printPrettyBoard(finalBoard);
         }
 
 
@@ -97,34 +101,51 @@ namespace NQueens
         }
 
 
-        /*
-        //Test code, working on the core algorithm
-        public static bool canPlaceQueen(int[,] nboard, int row, int col)
-        {
-            //Performs a Deep copy of array
-            int[,] copyboard = (int[,])nboard.Clone();
-            
-
-
-            return false;
-        }
-
+        //core algorithm that solves the n queen's problem
         public static bool solveQueen(int[,] nboard, int col)
         {
-            for (int row = 0; row < nboard.Length; row++)
+            //correct final escape characteristic
+            if (col == boardSize)
             {
-                if (canPlaceQueen())
+                setFinalBoard(nboard); //only sets the final board
+                return true;
+            }
+
+            //checks each row for free space
+            for (int row = 0; row < boardSize; row++)
+            {
+                if (canPlaceQueen(nboard, row, col))
                 {
-                    nboard = placeQueen(nboard, row, col);
-                    if(solveQueen(nboard, ++col))
+                    //creates temp board so previous board is not lost
+                    int[,] tempboard = placeQueen(nboard, row, col);
+
+                    //shows each step TODO remove
+                    printBoard(tempboard);
+                    Console.WriteLine();
+
+                    //if it successfully can place the queen, moves into its next recursive state
+                    //returns true so it can jump out of the recursive loop immeaditely when done
+                    if (solveQueen(tempboard, col+1))
                     {
                         return true;
                     }
                 }
             }
+            return false;
         }
-        */
 
+        //verifys if a queen can be placed in a location
+        public static bool canPlaceQueen(int[,] nboard, int row, int col)
+        {
+            return nboard[row, col] == 0;
+        }
+
+        //Sets final board, kinda unnecessary method tbh
+        public static void setFinalBoard(int[,] nboard){
+            finalBoard = nboard;
+        }
+        
+        
 
 
         public static void printBoard(int[,] board)
@@ -138,7 +159,19 @@ namespace NQueens
                 Console.WriteLine();
             }
         }
-
+        //swaps the 2's for Q's and all else for spaces
+        public static void printPrettyBoard(int[,] board)
+        {
+            for (int row = 0; row < boardSize; row++)
+            {
+                for (int col = 0; col < boardSize; col++)
+                {
+                    char c = board[row, col]!=2?' ':'Q';
+                    Console.Write(c + "|");
+                }
+                Console.WriteLine();
+            }
+        }
 
     }
 }
