@@ -43,7 +43,7 @@ namespace NQueens
             //System.Threading.Thread.Sleep(5000);            //Forces the App to wait for now to make sure stopwatch is working, will be removed.
             watch.Stop();
             long time = watch.ElapsedMilliseconds;
-            Console.WriteLine("time: " + (time / 1000) + ":" + (time % 1000));
+            Console.WriteLine("time: " + (time / 1000) + "." + String.Format("{0:#,000.}", (time % 1000)) + "s");
             printPrettyBoard(finalBoard);
         }
 
@@ -95,6 +95,24 @@ namespace NQueens
             return copyboard;
         }
 
+        //Test variation that only works for the backtracking solution below
+        public static int[,] placeQueenBT(int[,] board, int row, int col)
+        {
+            //Simply, the algorithm doesn't have to mark every space, just the ones that the backtracking needs to check against
+            int[,] nboard = (int[,])board.Clone();
+            nboard[row, col] = 2;
+            //Marking Right Invalid
+            for (int c = col+1; c < boardSize; c++)
+                nboard[row, c] = 1;
+            //Marking Upper-right Diagonal Invalid
+            for (int r = row-1, c = col+1; r >= 0 && c < boardSize; r--, c++)
+                nboard[r, c] = 1;
+            //Marking Lower-right Diagonal Invalid
+            for (int r = row+1, c = col+1; r < boardSize && c < boardSize; r++, c++)
+                nboard[r, c] = 1;
+
+            return nboard;
+        }
 
         //core algorithm that solves the n queen's problem
         public static bool solveQueen(int[,] nboard, int col)
@@ -112,7 +130,7 @@ namespace NQueens
                 if (canPlaceQueen(nboard, row, col))
                 {
                     //creates temp board so previous board is not lost
-                    int[,] tempboard = placeQueen(nboard, row, col);
+                    int[,] tempboard = placeQueenBT(nboard, row, col);
 
                     //shows each step TODO remove
                     //printBoard(tempboard);
