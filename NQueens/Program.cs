@@ -34,6 +34,9 @@ namespace NQueens
 
             //core algorithm begins
             solveQueen(new int[boardSize, boardSize], 0);
+            //List<int[,]> boards = new List<int[,]>();
+            //boards.Add(new int[boardSize, boardSize]);
+            //solveIterativeQueen(boards);
 
 
             
@@ -158,8 +161,46 @@ namespace NQueens
             finalBoard = nboard;
         }
         
-        
+        public static void solveIterativeQueen(List<int[,]> boards)
+        {
+            for (int count = 0; count < boards.Count; count++)
+            {
+                for (int i = 0; i < boardSize; i++)
+                {
+                    for (int j = 0; j < boardSize; j++)
+                    {
+                        if (canPlaceQueen(boards[count], i, j))
+                        {
+                            int[,] tempboard = new int[boardSize,boardSize];
+                                tempboard=placeQueen(boards[count], i, j);
+                            if (isSolved(tempboard))
+                            {
+                                setFinalBoard(tempboard);
+                                j = boardSize;
+                                i = boardSize;
+                                boards.Clear();
+                            }
+                            else
+                            {
+                                boards.Add(tempboard);
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
+        public static bool isSolved(int[,] tempboard)
+        {
+            int qCounter = 0;
+            for (int i = 0; i < boardSize; i++)
+                for (int j = 0; j < boardSize; j++)
+                    if (tempboard[i, j] == 2)
+                        qCounter++;
+            if (qCounter == boardSize)
+                return true;
+            return false;
+        }
 
         public static void printBoard(int[,] board)
         {
