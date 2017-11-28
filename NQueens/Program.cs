@@ -33,10 +33,10 @@ namespace NQueens
 
 
             //core algorithm begins
-            solveQueen(new int[boardSize, boardSize], 0);
-            //List<int[,]> boards = new List<int[,]>();
-            //boards.Add(new int[boardSize, boardSize]);
-            //solveIterativeQueen(boards);
+            //solveQueen(new int[boardSize, boardSize], 0);
+            List<int[,]> boards = new List<int[,]>();
+            boards.Add(new int[boardSize, boardSize]);
+            solveIterativeQueen(boards);
 
 
             
@@ -161,18 +161,26 @@ namespace NQueens
             finalBoard = nboard;
         }
         
+        //This method provides an Iterative solution to solving the N-Queens problem
         public static void solveIterativeQueen(List<int[,]> boards)
         {
+            //This is the master loop, it loops through a flat list of every board in creation. Every time a queen is placed on a board, it is added to the boards list.
+            //However, because it is a flat list, this means that this method uses Breadth First searching, meaning that it will create a board for every place the first Queen can be placed
+            //and once its created every board for that, then it will move onto the second Queen.
             for (int count = 0; count < boards.Count; count++)
             {
+                //The i and j loops essentially traverse the 2D array that represents the board
                 for (int i = 0; i < boardSize; i++)
                 {
                     for (int j = 0; j < boardSize; j++)
                     {
+                        //This method checks to see if the [i,j] spot is invalid, meaning another Queen threatens that position
                         if (canPlaceQueen(boards[count], i, j))
                         {
+                            //If it is a valid spot, a new board is created and the other cells that the queen threatens are marked invalid.
                             int[,] tempboard = new int[boardSize,boardSize];
                                 tempboard=placeQueen(boards[count], i, j);
+                            //Once the board has been created and the queen has been placed, it checks to see if this board is the finished solution, and stops the method via clearing the list of boards.
                             if (isSolved(tempboard))
                             {
                                 setFinalBoard(tempboard);
@@ -180,16 +188,19 @@ namespace NQueens
                                 i = boardSize;
                                 boards.Clear();
                             }
+                            //Otherwise, it adds this board to the list of boards to traverse.
                             else
                             {
                                 boards.Add(tempboard);
+                                Console.WriteLine();
+                                printPrettyBoard(tempboard);
                             }
                         }
                     }
                 }
             }
         }
-
+        //This method counts the number of queens on the board and sees if there are a number of queens equal to N.
         public static bool isSolved(int[,] tempboard)
         {
             int qCounter = 0;
@@ -202,6 +213,7 @@ namespace NQueens
             return false;
         }
 
+        //prints the board as how the program reads it.  The number 2 signifies a queen, 1 signifies a threatened space, and 0 or null represents a free space.
         public static void printBoard(int[,] board)
         {
             for (int row = 0; row < boardSize; row++)
